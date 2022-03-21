@@ -17,7 +17,7 @@ export default {
           <label :for="getCheckboxId(col.id)">{{ getCheckboxLabel(col.header) }}</label>
         </div>
         <div class="table-settings__col">
-          <button class="button" @click="$emit('reset-table')">Сбросить состояние</button>
+          <button class="button" @click="resetState">Сбросить состояние</button>
         </div>
       </div>
     </div>
@@ -52,6 +52,17 @@ export default {
       } else {
         dataTable.hideColumn(id)
       }
+    },
+    resetState() {
+      webix.$$('webix-datatable').setState({
+        ids: ["lostInterest", "position", "photo", "sku", "isFav", "sparklines", "product", "brand", "seller", "group", "remains", "reviews"],
+        size: [100, 100, 100, 100, 100, 200, -1, 100, 100, 100, 100, 100],
+        select: [],
+        scroll: { "x": 0, "y": 0 },
+        order: ["lostInterest", "position", "photo", "sku", "isFav", "sparklines", "product", "brand", "seller", "group", "remains", "reviews"],
+        filter: { lostInterest: "", position: "", sku: "", product: "", brand: "", seller: "", group: "", remains: "", reviews: "", isFav: false },
+        hidden: []
+      })
     }
   }
 }

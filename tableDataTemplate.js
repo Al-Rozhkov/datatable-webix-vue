@@ -1,23 +1,25 @@
 const generator = [
-  '{{repeat(200)}}',
+  '{{repeat(2000)}}',
   {
     id: '{{objectId()}}',
     lostInterest: '{{integer(0, 99)}}',
     position: '{{integer(0, 100)}}',
     positionDynamics: '{{integer(-4, 5)}}',
-    photo: 'photo.jpg',
+    photo: function() {
+      return Math.random() > 0.1 ? 'photo.jpg' : 'broken.jpg';
+    },
     sku: '{{integer(1000, 9999999)}}',
     sparklines: [
       '{{repeat(30)}}', '{{integer(80, 300)}}'
     ],
     product: '{{lorem(3, "words")}}',
     brand: function() {
-      var items = ['Gudci', 'H&N', 'Zapa', 'Push&Beer', 'Supreame']
-      return items[Math.floor(Math.random()*items.length)]
+      var items = ['Gudci', 'H&N', 'Zapa', 'Push&Beer', 'Supreame'];
+      return items[Math.floor(Math.random()*items.length)];
     },
     seller: function() {
-      var items = ['Geekmosis', 'Dognost', 'Xumonk', 'Apextri', 'Waterbaby', 'Neurocell']
-      return items[Math.floor(Math.random()*items.length)]
+      var items = ['Geekmosis', 'Dognost', 'Xumonk', 'Apextri', 'Waterbaby', 'Neurocell'];
+      return items[Math.floor(Math.random()*items.length)];
     },
     group: 'Патчи',
     remains: '{{integer(0, 1000)}}',

@@ -20,7 +20,7 @@ new Vue({
       <div class="toolbar">
         <search-input @input="" />
         <fav-checkbox v-model="showFavsOnly" />
-        <table-settings :columns="config.columns" el="" class="toolbar__table-settings" @reset-table="resetTable" />
+        <table-settings :columns="config.columns" el="" class="toolbar__table-settings" />
       </div>
 
       <webix-ui :config="config" :value="tableData" id="webix-datatable" />
@@ -40,11 +40,14 @@ new Vue({
       showFavsOnly: false,
       favsMap,
       columnsToHide: [],
-      datatableInitialState: null,
       tableData,
       config: {
-        view: "datatable", id: "webix-datatable", autoheight: true, autowidth: true, resizeColumn: true, dragColumn: true, borderless: true,
+        view: "datatable", id: "webix-datatable", height: 500, autowidth: true, resizeColumn: true, dragColumn: true, borderless: true,
         tooltip: { template: "" },
+        pager:{
+          size: 100,
+          group: 10,
+        },
         columns: [
           { id: "lostInterest", sort: "int", header: ["Упущен %", { content: "numberFilter" }], tooltip: false },
           {
@@ -58,7 +61,7 @@ new Vue({
           {
             id: "photo", sort: "int", header: "Фото",
             template: function (item) {
-              return item.photo ? `<img class="img-rounded" src="./img/thumbs/${item.photo}">` : ''
+              return item.photo ? `<img class="img-rounded" src="./img/thumbs/${item.photo}" width="32" height="48">` : ''
             },
             tooltip: function (item) {
               return item.photo ? `<img class="img-rounded" src="./img/${item.photo}">` : ''
@@ -99,12 +102,16 @@ new Vue({
             item.isFav = !item.isFav
             this.updateItem(cell.row, item)
 
+            // Update reactive vue data isFav property.
             if (item.isFav) {
               thisComponent.favsMap[item.id] = true
             } else {
               delete thisComponent.favsMap[item.id]
             }
 
+            // We need to update localstorage every time we interact with favorites,
+            // because we cannot fully trust the "beforeunload" browser event
+            // (see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#usage_notes)
             if (Object.keys(thisComponent.favsMap).length === 0) {
               localStorage.removeItem(LOCALSTORAGE_KEY)
             } else {
@@ -120,14 +127,5 @@ new Vue({
       }
     }
   },
-
-  mounted() {
-    this.datatableInitialState = webix.$$('webix-datatable').getState()
-  },
-  methods: {
-    resetTable() {
-      if (this.datatableInitialState)
-        webix.$$('webix-datatable').setState(this.datatableInitialState)
-    }
-  }
+  methods: {}
 });

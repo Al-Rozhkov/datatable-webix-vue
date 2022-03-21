@@ -20,7 +20,7 @@ function dataHandler(value) {
   }, this, true); */
 }
 
-function isEquals(a, b){
+function isEquals(a, b) {
   a = a.toString().toLowerCase();
   return a.indexOf(b) !== -1;
 }
@@ -43,6 +43,14 @@ export default {
     this.webixId = webix.ui(config, this.$el);
     if (this.value)
       dataHandler.call(this, this.value);
+
+    webix.attachEvent('unload', function () {
+      webix.storage.local.put("eggheads-state", webix.$$('webix-datatable').getState());
+    });
+
+    const savedState = webix.storage.local.get("eggheads-state");
+    if (savedState)
+      this.webixId.setState(savedState);
 
     // Register "Favorites only" filter.
     this.webixId.registerFilter(
@@ -74,10 +82,10 @@ export default {
       },
       {
         getValue: function (object) {
-          return object.checked;
+          return object.value;
         },
         setValue: function (object, value) {
-          object.checked = value;
+          object.value = value;
         },
       }
     ); */
