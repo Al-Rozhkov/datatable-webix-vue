@@ -44,14 +44,6 @@ export default {
     if (this.value)
       dataHandler.call(this, this.value);
 
-    webix.attachEvent('unload', function () {
-      webix.storage.local.put("eggheads-state", webix.$$('webix-datatable').getState());
-    });
-
-    const savedState = webix.storage.local.get("eggheads-state");
-    if (savedState)
-      this.webixId.setState(savedState);
-
     // Register "Favorites only" filter.
     this.webixId.registerFilter(
       document.getElementById('show-favs-only'),
@@ -103,6 +95,16 @@ export default {
          return false;
        });
      } */
+
+    // Store state before unload.
+    webix.attachEvent('unload', function () {
+      webix.storage.local.put("eggheads-state", webix.$$('webix-datatable').getState());
+    });
+
+    // Restore state if possible.
+    const savedState = webix.storage.local.get("eggheads-state");
+    if (savedState)
+      this.webixId.setState(savedState);
   },
 
   destroyed: function () {

@@ -61,10 +61,10 @@ new Vue({
           {
             id: "photo", sort: "int", header: "Фото",
             template: function (item) {
-              return item.photo ? `<img class="img-rounded" src="./img/thumbs/${item.photo}" width="32" height="48">` : ''
+              return item.photo ? `<img class="img-rounded" src="./img/thumbs/${item.photo}" width="32" height="48" onerror="this.src='/img/thumbs/fallback.jpg'"">` : ''
             },
             tooltip: function (item) {
-              return item.photo ? `<img class="img-rounded" src="./img/${item.photo}">` : ''
+              return item.photo ? `<img class="img-rounded" src="./img/${item.photo}" onerror="this.src='/img/fallback.jpg'"">` : ''
             },
           },
           { id: "sku", sort: "string", header: ["Артикул", { content: "textFilter" }], tooltip: false, },
@@ -107,6 +107,12 @@ new Vue({
               thisComponent.favsMap[item.id] = true
             } else {
               delete thisComponent.favsMap[item.id]
+            }
+
+            // Special case for "Show favorites only" checked state.
+            // Unchecked items should disappear reactively. So we should filter by all.
+            if (thisComponent.showFavsOnly) {
+              this.filterByAll();
             }
 
             // We need to update localstorage every time we interact with favorites,
