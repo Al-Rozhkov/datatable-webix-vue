@@ -64,7 +64,7 @@ export default {
     );
 
     // Register search input filter.
-    this.webixId.registerFilter(
+    /* this.webixId.registerFilter(
       document.getElementById('datatable-search-input'),
       {
         columnId: 'any',
@@ -80,7 +80,7 @@ export default {
           object.checked = value;
         },
       }
-    );
+    ); */
 
     /*  this.webixId.filterByAll = function () {
        //get filter values
