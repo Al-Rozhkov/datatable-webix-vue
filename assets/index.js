@@ -42,7 +42,7 @@ new Vue({
       columnsToHide: [],
       tableData,
       config: {
-        view: "datatable", id: "webix-datatable", height: 500, autowidth: true, resizeColumn: true, dragColumn: true, borderless: true,
+        view: "datatable", id: "webix-datatable", height: 500, autowidth: true, resizeColumn: { size: 6 }, dragColumn: true, borderless: true, css:"webix_header_border",
         tooltip: { template: "" },
         pager: {
           size: 100,
