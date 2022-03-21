@@ -20,7 +20,7 @@ new Vue({
       <div class="toolbar">
         <search-input @input="" />
         <fav-checkbox v-model="showFavsOnly" />
-        <table-settings :columns="config.columns" el="" class="toolbar__table-settings" />
+        <table-settings :columns="config.columns" el="" class="toolbar__table-settings" @reset-table="resetTable" />
       </div>
 
       <webix-ui :config="config" :value="tableData" id="webix-datatable" />
@@ -40,6 +40,7 @@ new Vue({
       showFavsOnly: false,
       favsMap,
       columnsToHide: [],
+      datatableInitialState: null,
       tableData,
       config: {
         view: "datatable", id: "webix-datatable", autoheight: true, autowidth: true, resizeColumn: true, dragColumn: true, borderless: true,
@@ -117,6 +118,16 @@ new Vue({
           }
         }
       }
+    }
+  },
+
+  mounted() {
+    this.datatableInitialState = webix.$$('webix-datatable').getState()
+  },
+  methods: {
+    resetTable() {
+      if (this.datatableInitialState)
+        webix.$$('webix-datatable').setState(this.datatableInitialState)
     }
   }
 });
