@@ -8,6 +8,7 @@ body {
 	gap: 1rem;
 	align-items: center;
 	margin-bottom: 2rem;
+	padding: 0.5rem;
 }
 
 .toolbar__table-settings {

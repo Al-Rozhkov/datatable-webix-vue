@@ -44,7 +44,7 @@ new Vue({
       config: {
         view: "datatable", id: "webix-datatable", height: 500, autowidth: true, resizeColumn: true, dragColumn: true, borderless: true,
         tooltip: { template: "" },
-        pager:{
+        pager: {
           size: 100,
           group: 10,
         },
@@ -107,12 +107,12 @@ new Vue({
               thisComponent.favsMap[item.id] = true
             } else {
               delete thisComponent.favsMap[item.id]
-            }
 
-            // Special case for "Show favorites only" checked state.
-            // Unchecked items should disappear reactively. So we should filter by all.
-            if (thisComponent.showFavsOnly) {
-              this.filterByAll();
+              // Special case for "Show favorites only" checked state.
+              // Unchecked items should disappear reactively. So we should filter by all.
+              if (thisComponent.showFavsOnly) {
+                this.filterByAll();
+              }
             }
 
             // We need to update localstorage every time we interact with favorites,

@@ -13,16 +13,11 @@ function dataHandler(value) {
     }
   } else if (view.setValue)
     view.setValue(value);
-
-  /* webix.ui.each(view, function (sub) {
-    if (sub.hasEvent && sub.hasEvent("onValue"))
-      sub.callEvent("onValue", [value]);
-  }, this, true); */
 }
 
-function isEquals(a, b) {
-  a = a.toString().toLowerCase();
-  return a.indexOf(b) !== -1;
+function isSubstring(value, filterValue) {
+  value = value.toString().toLowerCase();
+  return value.indexOf(filterValue) !== -1;
 }
 
 export default {
@@ -64,12 +59,17 @@ export default {
     );
 
     // Register search input filter.
-    /* this.webixId.registerFilter(
+    this.webixId.registerFilter(
       document.getElementById('datatable-search-input'),
       {
-        columnId: 'any',
-        compare: function (cellValue, filterValue) {
-          return !filterValue || Boolean(cellValue) === Boolean(filterValue)
+        columnId: 'sku-product-brand-seller',
+        compare: function (cellValue, filterValue, item) {
+          filterValue = filterValue.toString().toLowerCase();
+
+          return isSubstring(item.sku, filterValue)
+            || isSubstring(item.product, filterValue)
+            || isSubstring(item.brand, filterValue)
+            || isSubstring(item.seller, filterValue)
         },
       },
       {
@@ -80,21 +80,7 @@ export default {
           object.value = value;
         },
       }
-    ); */
-
-    /*  this.webixId.filterByAll = function () {
-       //get filter values
-       var text = this.getFilter('rank').value.toString().toLowerCase();
-       //unfilter for empty search text
-       if (!text) return this.filter();
- 
-       //filter using OR logic
-       this.filter(function (obj) {
-         if (equals(obj.year, text)) return true;
-         if (equals(obj.title, text)) return true;
-         return false;
-       });
-     } */
+    );
 
     // Store state before unload.
     webix.attachEvent('unload', function () {
