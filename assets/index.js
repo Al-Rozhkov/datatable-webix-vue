@@ -18,9 +18,9 @@ new Vue({
       <h3>Товары в категории <small>{{ tableData.length }} элементов</small></h3>
 
       <div class="toolbar">
-        <search-input @input="" />
+        <search-input />
         <fav-checkbox v-model="showFavsOnly" />
-        <table-settings :columns="config.columns" el="" class="toolbar__table-settings" />
+        <table-settings :columns="config.columns" class="toolbar__table-settings" />
       </div>
 
       <webix-ui :config="config" :value="tableData" id="webix-datatable" />
@@ -64,7 +64,7 @@ new Vue({
               return item.photo ? `<img class="img-rounded" src="./img/thumbs/${item.photo}" width="32" height="48" onerror="this.src='/img/thumbs/fallback.jpg'"">` : ''
             },
             tooltip: function (item) {
-              return item.photo ? `<img class="img-rounded" src="./img/${item.photo}" onerror="this.src='/img/fallback.jpg'"">` : ''
+              return item.photo ? `<img class="img-rounded" src="./img/${item.photo}" width="524" height="786" onerror="this.src='/img/fallback.jpg'"">` : ''
             },
           },
           { id: "sku", sort: "string", header: ["Артикул", { content: "textFilter" }], tooltip: false, },
@@ -90,11 +90,16 @@ new Vue({
               return item.product.charAt(0).toUpperCase() + item.product.slice(1);
             }
           },
-          { id: "brand", sort: "string", header: ["Бренд", { content: "multiSelectFilter" }], tooltip: false },
-          { id: "seller", sort: "string", header: ["Продавец", { content: "multiSelectFilter" }], tooltip: false },
+          { id: "brand", sort: "string", header: ["Бренд", { content: "multiSelectFilter" }], width: 150, fillspace: true, tooltip: false },
+          { id: "seller", sort: "string", header: ["Продавец", { content: "multiSelectFilter" }], width: 150, fillspace: true, tooltip: false },
           { id: "group", sort: "string", header: ["Группа", { content: "multiSelectFilter" }], tooltip: false },
           { id: "remains", sort: "int", header: ["Остаток", { content: "numberFilter" }], tooltip: false },
-          { id: "reviews", sort: "int", header: ["Отзывы", { content: "numberFilter" }], tooltip: false },
+          { id: "reviews", sort: "int", header: ["Отзывы", { content: "numberFilter" }], width: 120, tooltip: false,
+            format: webix.Number.numToStr({
+              groupDelimiter: " ",
+              groupSize: 3,
+            })
+          },
         ],
         onClick: {
           "icon-fav": function (el, cell) {

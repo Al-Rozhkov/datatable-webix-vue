@@ -56,7 +56,7 @@ export default {
     resetState() {
       webix.$$('webix-datatable').setState({
         ids: ["lostInterest", "position", "photo", "sku", "isFav", "sparklines", "product", "brand", "seller", "group", "remains", "reviews"],
-        size: [100, 100, 100, 100, 100, 200, -1, 100, 100, 100, 100, 100],
+        size: [100, 100, 100, 100, 100, 200, -1, 150, 150, 100, 100, 100],
         select: [],
         scroll: { "x": 0, "y": 0 },
         order: ["lostInterest", "position", "photo", "sku", "isFav", "sparklines", "product", "brand", "seller", "group", "remains", "reviews"],
