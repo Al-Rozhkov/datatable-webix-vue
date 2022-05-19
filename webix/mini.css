@@ -5821,6 +5821,9 @@ legend.webix_forminput_label_top {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+.webix_popup {
+  border-radius: 6px;
+}
 .webix_popup.webix_sidemenu.webix_sidemenu_left {
   border-width: 0 1px 0 0;
   box-shadow: 2px 0 2px rgba(0, 0, 0, 0.05);

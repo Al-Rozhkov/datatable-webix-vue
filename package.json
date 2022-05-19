@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.22.0",
+    "prettier": "2.6.2"
+  },
+  "name": "datatable-webix-vue",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Al-Rozhkov/datatable-webix-vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Al-Rozhkov/datatable-webix-vue/issues"
+  },
+  "homepage": "https://github.com/Al-Rozhkov/datatable-webix-vue#readme",
+  "description": ""
+}

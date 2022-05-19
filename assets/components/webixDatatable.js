@@ -1,3 +1,6 @@
+import customTextFilter from '../../webix/customTextFilter.js';
+import customSelectFilter from '../../webix/customSelectFilter.js';
+
 function dataHandler(value) {
   const view = $$(this.webixId);
 
@@ -32,6 +35,11 @@ export default {
   template: '<div></div>',
 
   mounted() {
+    // console.log(webix.ui.datafilter)
+
+    webix.ui.datafilter.customTextFilter = customTextFilter;
+    webix.ui.datafilter.eggheadsSelectFilter = customSelectFilter;
+
     const config = webix.copy(this.config);
     config.$scope = this;
 

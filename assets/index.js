@@ -1,4 +1,4 @@
-import tableData from "./tableData.js";
+// import tableData from "./tableData.js";
 import webixUiComponent from "./components/webixDatatable.js";
 import favCheckbox from "./components/favCheckbox.js";
 import searchInput from "./components/searchInput.js";
@@ -15,15 +15,18 @@ new Vue({
   el: "#app",
   template: `
     <div>
-      <h3>Товары в категории <small>{{ tableData.length }} элементов</small></h3>
+      <h3>Товары в категории
+        <!-- small>{{ tableData.length }} элементов</small -->
+      </h3>
 
       <div class="toolbar">
         <search-input />
         <fav-checkbox v-model="showFavsOnly" />
         <table-settings :columns="config.columns" class="toolbar__table-settings" />
+        <button @click="onTest">Test</button>
       </div>
 
-      <webix-ui :config="config" :value="tableData" id="webix-datatable" />
+      <webix-ui :config="config" id="webix-datatable" />
     </div>
   `,
   components: {
@@ -40,9 +43,17 @@ new Vue({
       showFavsOnly: false,
       favsMap,
       columnsToHide: [],
-      tableData,
+      // tableData,
       config: {
-        view: "datatable", id: "webix-datatable", height: 500, autowidth: true, resizeColumn: { size: 6 }, dragColumn: true, borderless: true, css:"webix_header_border",
+        view: 'datatable',
+        id: 'webix-datatable',
+        url: '/api/data.json',
+        height: 500,
+        autowidth: true,
+        resizeColumn: { size: 6 },
+        dragColumn: true,
+        borderless: true,
+        css: 'webix_header_border',
         tooltip: { template: "" },
         pager: {
           size: 100,
@@ -85,16 +96,17 @@ new Vue({
             tooltip: false,
           },
           {
-            id: "product", sort: "string", tooltip: false, header: ["Продукт", { content: "textFilter" }], adjust: "data",
+            id: "product", sort: "string", tooltip: false, header: ["Продукт", { content: "eggheadsTextFilter" }], adjust: "data",
             template: function (item) {
               return item.product.charAt(0).toUpperCase() + item.product.slice(1);
             }
           },
-          { id: "brand", sort: "string", header: ["Бренд", { content: "multiSelectFilter" }], width: 150, fillspace: true, tooltip: false },
-          { id: "seller", sort: "string", header: ["Продавец", { content: "multiSelectFilter" }], width: 150, fillspace: true, tooltip: false },
-          { id: "group", sort: "string", header: ["Группа", { content: "multiSelectFilter" }], tooltip: false },
-          { id: "remains", sort: "int", header: ["Остаток", { content: "numberFilter" }], tooltip: false },
-          { id: "reviews", sort: "int", header: ["Отзывы", { content: "numberFilter" }], width: 120, tooltip: false,
+          { id: "brand", sort: "string", header: ["Бренд", { content: "selectFilter" }], width: 150, fillspace: true, tooltip: false },
+          { id: "seller", sort: "string", header: ["Продавец", { content: "eggheadsSelectFilter" }], width: 150, fillspace: true, tooltip: false },
+          { id: "group", sort: "string", header: ["Группа", { content: "selectFilter" }], tooltip: false },
+          { id: "remains", sort: "int", header: ["Остаток", { content: "eggheadsNumberFilter", text: 'Остаток' }], tooltip: false },
+          {
+            id: "reviews", sort: "int", header: ["Отзывы", { content: "numberFilter" }], width: 120, tooltip: false,
             format: webix.Number.numToStr({
               groupDelimiter: " ",
               groupSize: 3,
@@ -138,5 +150,10 @@ new Vue({
       }
     }
   },
-  methods: {}
+  methods: {
+    onTest() {
+      // webix.$$('webix-datatable').loadNext(20, 25);
+      console.log(webix.$$('$list1'));
+    }
+  }
 });
